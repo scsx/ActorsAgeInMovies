@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col">
+
+        <div class="input-group input-group-lg mt-4" id="multisearch">
+            <!-- <input
+                class="form-control primary"
+                id="mainSearch"
+                type="text"
+                [(ngModel)]="searchQuery"
+                (keyup)="onSearch(searchQuery)"
+                placeholder="Search for actor or title"> -->
+
+            <!-- <div class="input-group-append" *ngIf="totalResults">
+                <span class="input-group-textprimary">
+                    {{totalResults}}
+                </span>
+            </div> -->
+        </div>
+
+    </div>
+</div>
+<div class="results">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                <li class="list-group-itemprimary" *ngFor="let item of searchResults">
+                    <!-- <p>{{ res.media_type }}</p> -->
+                    <!-- <p>{{ item?.known_for_department }}</p> -->
+                </li>
+            </ul>
+            <ul class="list-group empty" *ngIf="searchResults && searchResults.length === 0">
+                <li class="list-group-itemprimary">
+                    nada
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<div class="btn-group mt-4">
+    <a class="btn btn-primaryprimary" routerLink="/actor">Actor</a>
+    <a class="btn btn-primaryprimary" routerLink="/title">Title</a>
+</div>

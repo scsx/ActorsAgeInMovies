@@ -1,0 +1,21 @@
+{
+    "brace_style": "collapse,preserve-inline",
+    "css": {
+        "newline_between_rules": true,
+        "space_around_combinator": true
+    },
+    "html": {
+        "unformatted": ["a", "sub", "sup", "b", "i", "u"],
+        "indent_head_inner_html": false,
+        "indent_inner_html": false
+    },
+    "js": {
+        "unformatted": ["import"]
+    },
+    "beautify.language": {
+        "js": {
+            "type": ["javascript", "json", "typescript"],
+            "ext": ["js", "json", "ts"]
+        }
+    }
+}
