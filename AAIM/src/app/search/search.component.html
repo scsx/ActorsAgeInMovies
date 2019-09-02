@@ -2,19 +2,19 @@
     <div class="col">
 
         <div class="input-group input-group-lg mt-4" id="multisearch">
-            <!-- <input
+            <input
                 class="form-control primary"
                 id="mainSearch"
                 type="text"
                 [(ngModel)]="searchQuery"
                 (keyup)="onSearch(searchQuery)"
-                placeholder="Search for actor or title"> -->
+                placeholder="Search for actor or title">
 
-            <!-- <div class="input-group-append" *ngIf="totalResults">
-                <span class="input-group-textprimary">
+            <div class="input-group-append" *ngIf="totalResults">
+                <span class="input-group-text primary">
                     {{totalResults}}
                 </span>
-            </div> -->
+            </div>
         </div>
 
     </div>
@@ -22,15 +22,26 @@
 <div class="results">
     <div class="row">
         <div class="col">
-            <ul class="list-group">
-                <li class="list-group-itemprimary" *ngFor="let item of searchResults">
-                    <!-- <p>{{ res.media_type }}</p> -->
-                    <!-- <p>{{ item?.known_for_department }}</p> -->
-                </li>
-            </ul>
+            <div class="list-group">
+                <a
+                href="javascript:void(0);"
+                class="list-group-item list-group-item-action"
+                *ngFor="let item of searchResults"
+                routerLink="/title/{{item.id}}">
+                    <div class="media">
+                        <img src="{{ item.picture}}" class="align-self-start mr-3" alt="{{ item.id }}">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ item.name }}</h5>
+                        </div>
+                    </div>
+                    <!-- <img src="{{ item.picture}}" style="max-height: 50px;">
+                    <p>{{ item.name }}</p>
+                    <p>{{ item.id }}</p> -->
+                </a>
+            </div>
             <ul class="list-group empty" *ngIf="searchResults && searchResults.length === 0">
-                <li class="list-group-itemprimary">
-                    nada
+                <li class="list-group-item primary">
+                    <i>no results<span *ngIf="searchQuery && searchQuery.length < 3">. enter at least 3 characters</span></i>
                 </li>
             </ul>
 
@@ -39,6 +50,6 @@
 </div>
 
 <div class="btn-group mt-4">
-    <a class="btn btn-primaryprimary" routerLink="/actor">Actor</a>
-    <a class="btn btn-primaryprimary" routerLink="/title">Title</a>
+    <a class="btn btn-primary" routerLink="/actor">Actor</a>
+    <a class="btn btn-primary" routerLink="/title">Title</a>
 </div>

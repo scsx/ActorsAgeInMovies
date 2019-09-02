@@ -11,14 +11,12 @@ import { SearchComponent } from './search/search.component';
         data: { animationName: 'animateToHome' }
     },
     {
-        //path: 'actor/{id}',
-        path: 'actor',
+        path: 'actor/:id',
         component: ActorComponent,
         data: { animationName: 'animateToDetail' }
     },
     {
-        //path: 'title/{id}',
-        path: 'title',
+        path: 'title/:id',
         component: TitleComponent,
         data: { animationName: 'animateToDetail' }
     },

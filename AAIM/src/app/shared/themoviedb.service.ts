@@ -11,6 +11,7 @@ export class ThemoviedbService {
 
     constructor(private http: HttpClient) {}
 
+    // combine multiple requests
     /* public requestDataFromMultipleSources(): Observable < any[] > {
         let const1 = this.http.get(requestUrl1);
         let response2 = this.http.get(requestUrl2);
@@ -22,4 +23,13 @@ export class ThemoviedbService {
     public searchKeyword(query: string): Observable<any> {
         return this.http.get('https://api.themoviedb.org/3/search/multi?api_key=' + this.apiKey + '&query=' + query);
     }
+
+    public searchTitle(id: number): Observable<any> {
+        return this.http.get('https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.apiKey);
+    }
+
+    public searchTitleCast(id: number): Observable<any> {
+        return this.http.get('https://api.themoviedb.org/3/movie/' + id + '/credits?api_key=' + this.apiKey);
+    }
+
 }

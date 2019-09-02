@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemoviedbService } from '../shared/themoviedb.service';
 import { Subscription } from 'rxjs';
-import { tap, filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SearchResponse } from '../shared/searchresponse.model';
 
 @Component({
@@ -9,23 +9,29 @@ import { SearchResponse } from '../shared/searchresponse.model';
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss']
 })
+
 export class SearchComponent implements OnInit {
 
     searchQuery: string = null;
-    //searchResults: SearchResponse[];
-    searchResults: any;
+    searchResults: SearchResponse[];
     totalResults: string;
     searchSub: Subscription;
+    imagePath = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2';
 
     constructor(private movieService: ThemoviedbService) {}
 
     ngOnInit() {
         // TEST FUNC
-        //this.onSearch('soprano');
-        this.onSearch('Brad');
+        //this.onSearch('name of the');
     }
 
-    onSearch(query) { // here should return Obs with type SearchResponse ?
+
+    onSearch(query) {
+        if (query.length <= 2) {
+            this.searchResults = [];
+            return;
+        }
+        this.searchResults = [];
         this.searchSub = this.movieService.searchKeyword(query)
             .pipe(
                 // get total results & discard info other than the results array
@@ -39,20 +45,41 @@ export class SearchComponent implements OnInit {
                     });
                 }),
                 // exclude non actors (technical staff)
-                filter((results, i) => {
-                    //console.log(results);
-                    console.log(results[i].result.media_type);
-                    const item = results[i].result;
-                    return item.media_type === 'person';
-                    /* if (results.media_type !== 'person' || (results.media_type === 'person' && results.known_for_department === 'Acting')) {
-                        console.log(results.media_type);
-                        return true;
-                    } */
-                })
+                map(results => {
+                        return results.filter(x => {
+                            return x.result.media_type !== 'person' || (
+                                x.result.media_type === 'person' &&
+                                x.result.known_for_department === 'Acting'
+                            )
+                        })
+                    }
+                )
             ).subscribe(
                 data => {
-                    console.log(data);
-                    this.searchResults = data;
+                    data.forEach(el => {
+
+                        let isPerson: boolean;
+                        let posterOrPhoto: string;
+                        let name: string;
+
+                        if (el.result.media_type === 'person') {
+                            el.result.profile_path === null ? posterOrPhoto = 'assets/images/user.jpg' : posterOrPhoto = this.imagePath + el.result.profile_path;
+                            name = el.result.name;
+                            isPerson = true;
+                        } else {
+                            el.result.poster_path === null ? posterOrPhoto = 'assets/images/reel.jpg' : posterOrPhoto = this.imagePath + el.result.poster_path;
+                            el.result.name === undefined ? name = el.result.title : name = el.result.name;
+                            isPerson = false;
+                        }
+
+                        let newRes = new SearchResponse(
+                           el.result.id,
+                           isPerson,
+                           name,
+                           posterOrPhoto
+                        );
+                        this.searchResults.push(newRes);
+                    });
                 },
                 theError => {
                     console.log("custom error: " +  theError);
@@ -64,3 +91,4 @@ export class SearchComponent implements OnInit {
         // here check if is person or not, navigate, unsubscribe, etc
     }
 }
+

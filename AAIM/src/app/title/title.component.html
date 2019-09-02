@@ -1,2 +1,38 @@
-<p>title works!</p>
-<a class="btn btn-primary regularfont" routerLink="/search">search</a>
+<div class="row">
+    <div class="col order-2 order-md-1">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cast</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let actor of cast">
+                    <div class="media">
+                        <!-- <img src="{{ item.picture}}" class="align-self-start mr-3" alt="{{ item.id }}"> -->
+                        <div class="media-body">
+                            <h4 class="mt-0">{{ actor.name }}</h4>
+                            <p class="text-secondary">{{ actor.character }}</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col order-1 order-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Details</h5>
+                <h2>{{titleDetails.title}}</h2>
+                <p class="card-text">{{titleDetails.tagline}}</p>
+
+
+                <!-- this.titleDetails.title = data.title;
+                this.titleDetails.id = data.id;
+                this.titleDetails.original_title = data.original_title;
+                this.titleDetails.poster_path = data.poster_path;
+                this.titleDetails.release_date = data.release_date;
+                this.titleDetails.tagline = data.tagline; -->
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-primary" routerLink="/search">search</a>
