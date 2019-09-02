@@ -32,4 +32,8 @@ export class ThemoviedbService {
         return this.http.get('https://api.themoviedb.org/3/movie/' + id + '/credits?api_key=' + this.apiKey);
     }
 
+    public getActorAge(id: number): Observable<any> {
+        return this.http.get('https://api.themoviedb.org/3/person/' + id + '?api_key=' + this.apiKey);
+    }
+
 }

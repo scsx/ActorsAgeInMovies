@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { ThemoviedbService } from '../shared/themoviedb.service';
+import { Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { IMovie } from '../shared/movie.interface';
+import { ThemoviedbService } from '../shared/themoviedb.service';
 
 @Component({
     selector: 'app-title',
@@ -39,13 +40,6 @@ export class TitleComponent implements OnInit {
                     release_date: data.release_date,
                     tagline: data.tagline
                 }
-                /* console.log(data.title);
-                this.titleDetails.title = data.title;
-                this.titleDetails.id = data.id;
-                this.titleDetails.original_title = data.original_title;
-                this.titleDetails.poster_path = data.poster_path;
-                this.titleDetails.release_date = data.release_date;
-                this.titleDetails.tagline = data.tagline; */
             },
             theError => {
                 console.log("Error: " +  theError);
@@ -54,9 +48,32 @@ export class TitleComponent implements OnInit {
     }
 
     getTitleCast(id) {
-        this.getMovie = this.movieService.searchTitleCast(id).subscribe(
+        this.getMovie = this.movieService.searchTitleCast(id)
+        .pipe(
+            /* map(allCast => {
+                console.log(allCast.cast);
+                    allCast.cast.map(person => `${person.name} ${person.id}`)
+                }
+            ) */
+            map(
+                allCast => { return allCast.cast }
+            )
+            //.take(20)
+        ).subscribe(
             data => {
-                this.cast = data.cast;
+                console.log(data);
+                //this.cast = data;
+                //console.log(this.cast);
+                /* data.cast.forEach(element => {
+                    let x = this.movieService.getActorAge(element.id).subscribe(
+                        actor => {
+                            //console.log(actor.birthday);
+                            //this.cast = this.cast(...actor);
+                        }
+                    );
+                    
+                    
+                }); */
             },
             theError => {
                 console.log("Error: " +  theError);

@@ -5,5 +5,6 @@ export class SearchResponse {
         public isPerson: boolean,
         public name: string,
         public picture: string
+        //public date: Date
     ){}
 }
