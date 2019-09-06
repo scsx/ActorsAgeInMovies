@@ -16,3 +16,9 @@ https://developers.themoviedb.org
 Routing with animation between cpts
 
 https://angular.io/guide/route-animations
+
+
+## Tests
+
+Movie with no release date (Embattled):
+https://api.themoviedb.org/3/movie/592643

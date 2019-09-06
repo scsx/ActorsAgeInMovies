@@ -27,16 +27,15 @@
                 href="javascript:void(0);"
                 class="list-group-item list-group-item-action"
                 *ngFor="let item of searchResults"
-                routerLink="/title/{{item.id}}">
+                [routerLink]="goToDetail(item.id, item.isPerson)">
                     <div class="media">
                         <img src="{{ item.picture}}" class="align-self-start mr-3" alt="{{ item.id }}">
                         <div class="media-body">
                             <h5 class="mt-0">{{ item.name }}</h5>
+                            <!--{{ item | json }}-->
                         </div>
                     </div>
-                    <!-- <img src="{{ item.picture}}" style="max-height: 50px;">
-                    <p>{{ item.name }}</p>
-                    <p>{{ item.id }}</p> -->
+                    
                 </a>
             </div>
             <ul class="list-group empty" *ngIf="searchResults && searchResults.length === 0">

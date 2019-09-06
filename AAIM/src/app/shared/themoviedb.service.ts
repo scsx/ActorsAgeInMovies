@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,15 +11,6 @@ export class ThemoviedbService {
 
     constructor(private http: HttpClient) {}
 
-    // combine multiple requests
-    /* public requestDataFromMultipleSources(): Observable < any[] > {
-        let const1 = this.http.get(requestUrl1);
-        let response2 = this.http.get(requestUrl2);
-        let response3 = this.http.get(requestUrl3);
-        // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
-        return forkJoin([response1, response2, response3]);
-    } */
-
     public searchKeyword(query: string): Observable<any> {
         return this.http.get('https://api.themoviedb.org/3/search/multi?api_key=' + this.apiKey + '&query=' + query);
     }
@@ -29,11 +20,24 @@ export class ThemoviedbService {
     }
 
     public searchTitleCast(id: number): Observable<any> {
-        return this.http.get('https://api.themoviedb.org/3/movie/' + id + '/credits?api_key=' + this.apiKey);
+        return this.http.get('https://api.themoviedb.org/3/movie/' + id + '/credits?api_key=' + this.apiKey, {observe: 'response'}); // observe response to read headers
     }
 
-    public getActorAge(id: number): Observable<any> {
+    public getActor(id: number): Observable<any> {
         return this.http.get('https://api.themoviedb.org/3/person/' + id + '?api_key=' + this.apiKey);
+    }
+
+    public getActorsMovies(id: number): Observable<any> {
+        return this.http.get('https://api.themoviedb.org/3/person/' + id + '/movie_credits?api_key=' + this.apiKey)
+    }
+
+    public calculateYears(movieDate, actorDate) {
+        if (movieDate) {
+            const diffTime = Math.abs(movieDate.getTime() - actorDate.getTime());
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 365));
+        } else {
+            return 0;
+        }
     }
 
 }

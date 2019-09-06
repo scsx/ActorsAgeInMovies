@@ -2,15 +2,26 @@
     <div class="col order-2 order-md-1">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Cast</h5>
+                <h5 class="card-title">Cast ({{ castSize }})</h5>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="castmovie">
                 <li class="list-group-item" *ngFor="let actor of cast">
                     <div class="media">
-                        <!-- <img src="{{ item.picture}}" class="align-self-start mr-3" alt="{{ item.id }}"> -->
+                        <img *ngIf="actor.picture; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" class="align-self-start mr-3" alt="{{ actor.name }}">
+                        <ng-template #noPicture>
+                            <img src="assets/images/user.jpg" class="align-self-start mr-3">
+                        </ng-template>
                         <div class="media-body">
-                            <h4 class="mt-0">{{ actor.name }}</h4>
+                            <h4 class="mt-0">
+                                <a routerLink="/actor/{{ actor.id }}">{{ actor.name }}</a>
+                                <span class="badge badge-pill badge-success ml-1">
+                                    {{ actor.ageDuringMovie }}
+                                    <small class="font-weight-light">yo</small>
+                                </span>
+                            </h4>
                             <p class="text-secondary">{{ actor.character }}</p>
+                            <p class="text-secondary">{{ actor.birthday | date:'mediumDate' }}</p>
+                            <p class="text-secondary">{{ actor.id }}</p>
                         </div>
                     </div>
                 </li>
@@ -18,21 +29,19 @@
         </div>
     </div>
     <div class="col order-1 order-md-2">
-        <div class="card">
+        <div class="card" id="moviedetails">
             <div class="card-body">
                 <h5 class="card-title">Details</h5>
-                <h2>{{titleDetails?.title}}</h2>
-                <p class="card-text">{{titleDetails?.tagline}}</p>
+                <h2>{{ titleDetails?.title }}</h2>
+                <p class="lead">{{ titleDetails?.release_date | date }}</p>
 
+                <img *ngIf="titleDetails?.poster_path" src="https://image.tmdb.org/t/p/w500{{ titleDetails.poster_path }}">
 
-                <!-- this.titleDetails.title = data.title;
-                this.titleDetails.id = data.id;
-                this.titleDetails.original_title = data.original_title;
-                this.titleDetails.poster_path = data.poster_path;
-                this.titleDetails.release_date = data.release_date;
-                this.titleDetails.tagline = data.tagline; -->
+                <blockquote class="blockquote mt-3">
+                    <p class="mb-0">{{titleDetails?.tagline}}</p>
+                </blockquote>
+                <p class="mt-4"><a class="btn btn-outline-dark" routerLink="/search">Back to search</a></p>
             </div>
         </div>
     </div>
 </div>
-<a class="btn btn-primary" routerLink="/search">search</a>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ThemoviedbService } from '../shared/themoviedb.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { SearchResponse } from '../shared/searchresponse.model';
     styleUrls: ['./search.component.scss']
 })
 
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
     searchQuery: string = null;
     searchResults: SearchResponse[];
@@ -22,7 +22,7 @@ export class SearchComponent implements OnInit {
 
     ngOnInit() {
         // TEST FUNC
-        //this.onSearch('name of the');
+        //this.onSearch('john');
     }
 
 
@@ -88,7 +88,15 @@ export class SearchComponent implements OnInit {
     }
 
     goToDetail(id: number, isPerson: boolean) {
-        // here check if is person or not, navigate, unsubscribe, etc
+        if (isPerson) {
+            return '/actor/' + id;
+        } else {
+            return '/title/' + id;
+        }
+    }
+
+    ngOnDestroy() {
+        this.searchSub.unsubscribe();
     }
 }
 

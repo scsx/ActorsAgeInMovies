@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-import { IMovie } from '../shared/movie.interface';
+import { Subscription, timer, interval } from 'rxjs';
+import { map, filter, tap, retryWhen, delayWhen } from 'rxjs/operators';
+import { IMovie, IActorInMovie } from '../shared/movie.interface';
 import { ThemoviedbService } from '../shared/themoviedb.service';
 
 @Component({
@@ -10,23 +10,22 @@ import { ThemoviedbService } from '../shared/themoviedb.service';
     templateUrl: './title.component.html',
     styleUrls: ['./title.component.scss']
 })
-export class TitleComponent implements OnInit {
+export class TitleComponent implements OnInit, OnDestroy {
 
     getMovie: Subscription;
+    getMovieCast: Subscription;
     titleId: number;
     titleDetails: IMovie;
-
-    cast: [];
+    cast: IActorInMovie[] = [];
+    castSize: number;
 
     constructor(private movieService: ThemoviedbService, private route: ActivatedRoute) {
         this.route.params.subscribe( params => this.titleId = params.id );
     }
 
     ngOnInit() {
-
         this.getTitle(this.titleId);
         this.getTitleCast(this.titleId);
-        console.log(this.titleDetails);
     }
 
     getTitle(id) {
@@ -37,48 +36,98 @@ export class TitleComponent implements OnInit {
                     id: data.id,
                     original_title: data.original_title,
                     poster_path: data.poster_path,
-                    release_date: data.release_date,
+                    release_date: new Date(data.release_date),
                     tagline: data.tagline
                 }
             },
-            theError => {
-                console.log("Error: " +  theError);
+            error => {
+                console.log("Error getting movie: " +  error);
             }
         );
     }
 
     getTitleCast(id) {
         this.getMovie = this.movieService.searchTitleCast(id)
+        /*
+        .pipe(retryWhen(_ => {
+            console.log("trying");
+            return interval(2000)
+        }))
+        */
+        /*
         .pipe(
-            /* map(allCast => {
-                console.log(allCast.cast);
-                    allCast.cast.map(person => `${person.name} ${person.id}`)
-                }
-            ) */
-            map(
-                allCast => { return allCast.cast }
+            retryWhen(errors =>
+                errors.pipe(
+                tap(val => console.log(errors)),
+                //restart in 6 seconds
+                delayWhen(val => timer(1000))
+                )
             )
-            //.take(20)
-        ).subscribe(
+        )
+        */
+        .pipe(
+            // rate limit
+            tap(data =>
+                console.log(data.headers.get('X-RateLimit-Remaining')) // max 40
+            ),
+            // get actors only, excluding technical staff
+            map(allCast => {
+                return allCast.body.cast;
+            })
+        )
+        .subscribe(
             data => {
-                console.log(data);
-                //this.cast = data;
-                //console.log(this.cast);
-                /* data.cast.forEach(element => {
-                    let x = this.movieService.getActorAge(element.id).subscribe(
-                        actor => {
-                            //console.log(actor.birthday);
-                            //this.cast = this.cast(...actor);
-                        }
-                    );
-                    
-                    
-                }); */
+                this.castSize = data.length;
+                data.forEach((element, index = 0) => {
+
+                        this.getMovieCast = this.movieService.getActor(element.id).pipe(
+                            filter(actor => {
+                                return actor.birthday !== null;
+                            })
+                        )
+                        // todo: try to get around api rate limit (40, 10sec)
+                        .subscribe(
+                            actor => {
+                                
+                                let movieChar = data[index].character;
+                                this.cast.push({
+                                    id: actor.id,
+                                    name: actor.name,
+                                    character: movieChar,
+                                    birthday: new Date(actor.birthday),
+                                    picture: actor.profile_path,
+                                    ageDuringMovie: this.movieService.calculateYears(
+                                        new Date(actor.birthday),
+                                        new Date(this.titleDetails.release_date)
+                                        )
+                                })
+
+                                index++;
+                            },
+                            error => {
+                                console.log(error);
+                                if (error) {
+        
+        return this.getMovieCast;
+          
+          }
+                                console.log("Error getting ages");
+                            }
+                        )
+                    }
+                )
             },
-            theError => {
-                console.log("Error: " +  theError);
+            error => {
+                console.log(error);
+                console.log("I'm in getTitleCast");
             }
-        );
+        )
     }
 
+    ngOnDestroy() {
+        this.getMovie.unsubscribe();
+        //this.getMovieCast.unsubscribe();
+    }
 }
+
+

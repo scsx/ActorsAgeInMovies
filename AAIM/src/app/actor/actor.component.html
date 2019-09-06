@@ -1,3 +1,60 @@
-<p>actor works!</p>
-<a class="btn btn-primary regularfont" routerLink="/search">search</a>
-<p>This is a test</p>
+<div class="row no-gutters">
+    <div class="col col-md-6">
+        <div class="card" id="actordetails">
+            <div class="card-body">
+                <h2>{{ actor?.name }}</h2>
+                <p class="text-muted">
+                    {{ actor?.birthday | date:'mediumDate' }}
+                    <span *ngIf="actor?.place_of_birth"> | </span>
+                    {{ actor?.place_of_birth }}
+                </p>
+                <p *ngIf="actor?.deathday" class="text-muted">{{ actor?.deathday | date:'mediumDate' }}</p>
+                <img *ngIf="actor?.picture; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" alt="{{ actor.name }}">
+                <ng-template #noPicture>
+                    <img src="assets/images/user.jpg" class="align-self-start mr-3">
+                </ng-template>
+                <p class="mt-2">{{ actor?.biography }}</p>
+
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">Popularity: {{ actor?.popularity }}</li>
+                    <li class="list-group-item">Gender: {{ actor?.gender }}</li>
+                    <li class="list-group-item">ID: {{ actor?.id }}</li>
+                </ul>
+                <p class="mt-4"><a class="btn btn-outline-dark" routerLink="/search">Back to search</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="col col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Movies ({{ movieCount }})</h5>
+            </div>
+            <ul class="list-group list-group-flush" id="moviesin">
+                <li class="list-group-item" *ngFor="let mov of actor?.movies">
+                    <div class="media">
+                        <img *ngIf="mov.poster_path; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ mov.poster_path }}" class="align-self-start mr-3" alt="{{ actor.name }}">
+                        <ng-template #noPicture>
+                            <img src="assets/images/reel.jpg" class="align-self-start mr-3">
+                        </ng-template>
+                        <div class="media-body">
+                            <h4 class="mt-0">
+                                <a routerLink="/title/{{ mov.movieId }}">{{ mov.title }}</a>
+                            </h4>
+                            <p class="text-secondary">{{ mov.character }}</p>
+                            <p class="text-secondary" *ngIf="mov?.release_date">
+                                {{ mov?.release_date | date:'mediumDate' }}
+                                <span class="badge badge-pill badge-success ml-1">
+                                    {{ mov.ageDuringMovie }}
+                                    <small class="font-weight-light">yo</small>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--<pre><code style="color: #fff">
+            {{ actor | json }}
+        </code></pre>-->
