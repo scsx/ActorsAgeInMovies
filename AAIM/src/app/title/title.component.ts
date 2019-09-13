@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, timer, interval } from 'rxjs';
 import { map, filter, tap, retryWhen, delayWhen } from 'rxjs/operators';
-import { IMovie, IActorInMovie } from '../shared/movie.interface';
+import { IMovie, IActorInMovie } from '../shared/movies&actors.interface';
 import { ThemoviedbService } from '../shared/themoviedb.service';
 
 @Component({
@@ -37,7 +37,8 @@ export class TitleComponent implements OnInit, OnDestroy {
                     original_title: data.original_title,
                     poster_path: data.poster_path,
                     release_date: new Date(data.release_date),
-                    tagline: data.tagline
+                    tagline: data.tagline,
+                    overview: data.overview
                 }
             },
             error => {
@@ -67,9 +68,10 @@ export class TitleComponent implements OnInit, OnDestroy {
         */
         .pipe(
             // rate limit
-            tap(data =>
-                console.log(data.headers.get('X-RateLimit-Remaining')) // max 40
-            ),
+            tap(data => {
+                let limit = data.headers.get('X-RateLimit-Remaining')
+                //console.log(limit); // max 40
+            }),
             // get actors only, excluding technical staff
             map(allCast => {
                 return allCast.body.cast;
@@ -88,7 +90,7 @@ export class TitleComponent implements OnInit, OnDestroy {
                         // todo: try to get around api rate limit (40, 10sec)
                         .subscribe(
                             actor => {
-                                
+
                                 let movieChar = data[index].character;
                                 this.cast.push({
                                     id: actor.id,
@@ -107,9 +109,9 @@ export class TitleComponent implements OnInit, OnDestroy {
                             error => {
                                 console.log(error);
                                 if (error) {
-        
+
         return this.getMovieCast;
-          
+
           }
                                 console.log("Error getting ages");
                             }

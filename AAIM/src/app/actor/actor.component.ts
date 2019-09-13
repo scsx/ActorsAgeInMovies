@@ -3,9 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ThemoviedbService } from '../shared/themoviedb.service';
-//import { IActor } from '../shared/actor.interface';
-//import { IMovieFromActor } from '../shared/moviefromactor.interface';
-import { IActorDetail } from '../shared/actordetail.interface';
+import { IActorDetail } from '../shared/movies&actors.interface';
 
 @Component({
     selector: 'app-actor',
@@ -66,10 +64,10 @@ export class ActorComponent implements OnInit, OnDestroy {
 
                     // actor's movies's details
                     this.movieCount = work.length;
-                    
+
                     work.forEach(mov => {
                         this.actor.movies.push({
-                            movieId: mov.id,
+                            id: mov.id,
                             poster_path: mov.poster_path,
                             release_date: new Date(mov.release_date),
                             title: mov.title,

@@ -32,13 +32,13 @@
             <ul class="list-group list-group-flush" id="moviesin">
                 <li class="list-group-item" *ngFor="let mov of actor?.movies">
                     <div class="media">
-                        <img *ngIf="mov.poster_path; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ mov.poster_path }}" class="align-self-start mr-3" alt="{{ actor.name }}">
+                        <img *ngIf="mov?.poster_path; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ mov.poster_path }}" class="align-self-start mr-3" alt="{{ actor.name }}">
                         <ng-template #noPicture>
                             <img src="assets/images/reel.jpg" class="align-self-start mr-3">
                         </ng-template>
                         <div class="media-body">
                             <h4 class="mt-0">
-                                <a routerLink="/title/{{ mov.movieId }}">{{ mov.title }}</a>
+                                <a routerLink="/title/{{ mov.id }}">{{ mov.title }}</a>
                             </h4>
                             <p class="text-secondary">{{ mov.character }}</p>
                             <p class="text-secondary" *ngIf="mov?.release_date">
