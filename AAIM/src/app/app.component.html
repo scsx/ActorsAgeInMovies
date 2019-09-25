@@ -1,14 +1,9 @@
+<!-- <div class="wrapper" [class.hp]="isHomepage"> -->
 <div class="wrapper">
-   
-        <div class="row">
-            <div class="col">
-                <h1 class="h3 mb-3 font-weight-normal text-center">Actors Age In Movies</h1>
-            </div>
-        </div>
-
-        <div [@routeAnimationsTrigger]="prepareRoute(theRouterOutlet)" >
+    <h1 class="text-center">Actors Age In Movies</h1>
+    <div [@routeAnimationsTrigger]="prepareRoute(theRouterOutlet)">
+        <div class="container-fluid">
             <router-outlet #theRouterOutlet="outlet"></router-outlet>
         </div>
-
-  
+    </div>
 </div>

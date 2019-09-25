@@ -1,10 +1,11 @@
-<div class="row">
-    <div class="col order-2 order-md-1">
+<p class="back"><a class="" routerLink="/search">Back to search</a></p>
+<div class="row no-gutters movie">
+    <div class="col-12 col-md-6 order-2 order-md-1" id="castmovie">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Cast ({{ castSize }})</h5>
             </div>
-            <ul class="list-group list-group-flush" id="castmovie">
+            <ul class="list-group list-group-flush">
                 <li class="list-group-item" *ngFor="let actor of cast">
                     <div class="media">
                         <img *ngIf="actor.picture; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" class="align-self-start mr-3" alt="{{ actor.name }}">
@@ -14,35 +15,35 @@
                         <div class="media-body">
                             <h4 class="mt-0">
                                 <a routerLink="/actor/{{ actor.id }}">{{ actor.name }}</a>
-                                <span class="badge badge-pill badge-success ml-1">
-                                    {{ actor.ageDuringMovie }}
-                                    <small class="font-weight-light">yo</small>
-                                </span>
                             </h4>
-                            <p class="text-secondary">{{ actor.character }}</p>
+                            <p class="text-black">{{ actor.character }}</p>
                             <p class="text-secondary">{{ actor.birthday | date:'mediumDate' }}</p>
-                            <p class="text-secondary">{{ actor.id }}</p>
+                            <div class="age">
+                                <div class="years bg-success text-white">
+                                    {{ actor.ageDuringMovie }}
+                                </div>
+                                <p class="text-success">yo</p>
+                            </div>
                         </div>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="col order-1 order-md-2">
-        <div class="card" id="moviedetails">
+    <div class="col-12 col-md-6 order-1 order-md-2" id="moviedetails">
+        <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Details</h5>
                 <h2>{{ titleDetails?.title }}</h2>
                 <p class="lead">{{ titleDetails?.release_date | date }}</p>
 
                 <img *ngIf="titleDetails?.poster_path" src="https://image.tmdb.org/t/p/w500{{ titleDetails.poster_path }}">
 
                 <blockquote class="blockquote mt-3">
-                    <p class="mb-0">{{titleDetails?.tagline}}</p>
+                    {{titleDetails?.tagline}}
                 </blockquote>
                 <p>{{ titleDetails?.overview }}</p>
-                <p class="mt-4"><a class="btn btn-outline-dark" routerLink="/search">Back to search</a></p>
             </div>
         </div>
     </div>
 </div>
+<p class="back"><a class="" routerLink="/search">Back to search</a></p>

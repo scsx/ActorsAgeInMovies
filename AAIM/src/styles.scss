@@ -1,104 +1,316 @@
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,700&display=swap');
 
-* {
-    font-family: 'Josefin Sans', cursive;
+$roast: #f5cd00;
+
+@mixin noBorderLeft {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
-html, body {
+@mixin noBorderRight {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+* {
+    font-family: 'Josefin Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: #FFDD00;
+    //border: 20px solid #fff;
     min-height: 100%;
 }
-body {
-    background: gold;
-    border: 20px solid #fff;
+
+app-root {
+    display: block;
+    min-height: 100%;
+}
+
+.wrapper {
+    /* width: 100%;
+    max-width: 960px; */
+    margin: auto;
+
+    &.homepage {
+        min-height: 100%;
+    }
 }
 
 h1 {
-    font-size: 55px;
-    color: #01d277;
-}
+    font-size: 30px;
+    font-weight: 700;
+    color: #292929;
+    margin: 0 auto;
+    line-height: 1;
+    transition: all .3s;
+    padding: 20px 0 0 0;
 
-
-.wrapper {
-    width: 100%;
-    max-width: 960px;
-    padding: 20px;
-    margin: auto;
-}
-
-#multisearch {
-    .form-control.ng-dirty {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    .input-group .form-control {
-        border-bottom-left-radius: 0;
-    }
-    .input-group-text {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        background: #fff;
-        color: #888;
-        font-size: 1rem;
+    .homepage & {
+        font-size: 70px;
+        color: #fff;
+        background: #262626;
+        padding: 50px 20px;
+        text-shadow: 4px 4px #000;
     }
 }
 
-.results {
+.ball {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #000000a8;
+    border-radius: 50%;
 
-    .list-group {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        .list-group-item:first-child {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-top: none;
+    &.black {
+        border-width: 7px;
+    }
+}
+
+.age {
+    position: relative;
+    margin-top: 16px;
+    .years {
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        text-align: center;
+        font-size: 23px;
+        line-height: 43px;
+        font-weight: 700;
+    }
+    p.text-success {
+        position: absolute;
+        top: 8px;
+        left: 44px;
+        margin: 0;
+    }
+}
+
+p.back {
+    text-align: center;
+    margin: 20px 0;
+
+    a {
+        color: #ac9605;
+    }
+}
+
+.searchpage {
+    background: $roast;
+    width: 80%;
+    max-width: 600px;
+    margin: 60px auto;
+    border-radius: 8px;
+    padding: 14px;
+
+    .inputs {
+        .input-group {
+            &:focus {
+                outline: 0;
+
+            }
+
+            .form-control {
+                height: 65px;
+                border-color: #a5a5a5;
+                &:focus {
+                    box-shadow: none;
+                    border-color: #ced4da;
+                }
+
+                &.ng-dirty {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
         }
 
-        .media {
-            h5 {
-                color: #333;
+        .input-group-text {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            background: #fff;
+            color: #888;
+            font-size: 1rem;
+        }
+    }
+
+    .results {
+        .list-group {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+
+            .list-group-item:first-child {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-top: none;
             }
-            img {
-                max-height: 60px;
+
+            .media {
+                h5 {
+                    color: #333;
+                }
+
+                img {
+                    max-height: 60px;
+                }
             }
+        }
+    }
+}
+
+p.credits {
+    font-size: 12px;
+    color: #2626269e;
+    a {
+        color: #2626269e;
+        &:hover {
+            color: #262626cf;
         }
     }
 }
 
 // movie details
-#castmovie {
-    li {
-        img {
-            width: 120px;
+.movie {
+    #castmovie {
+        .card {
+            @include noBorderRight;
+            border: none;
+            h5.card-title {
+                margin: 0;
+            }
+            li {
+                h4 {
+                    font-weight: 700;
+                    line-height: 1.1;
+                    margin-bottom: 6px;
+                }
+                img {
+                    width: 120px;
+                }
+                p {
+                    margin-bottom: 6px;
+                    &.text-black {
+                        font-weight: 700;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+        }
+    }
+
+    #moviedetails {
+        .card {
+            @include noBorderLeft;
+            border: none;
+            background: $roast;
+            color: #715c07;
+
+            h2 {
+                font-size: 55px;
+                font-weight: 700;
+                line-height: 1;
+                color: #715c07;
+            }
+            img {
+                width: 100%;
+            }
+            blockquote {
+                font-size: 30px;
+                font-style: italic;
+                line-height: 1.1;
+            }
         }
     }
 }
 
-#moviedetails {
-    h2 {
-        font-size: 40px;
+// actor details
+.actor {
+    #actordetails {
+        .card {
+            @include noBorderRight;
+            border: none;
+            background: $roast;
+            color: #715c07;
+
+            h2 {
+                font-size: 55px;
+                font-weight: 700;
+                line-height: 1;
+                color: #715c07;
+            }
+            p.bio {
+                line-height: 1.2;
+            }
+            img {
+                width: 100%;
+            }
+            .pop {
+                height: 40px;
+                width: 120px;
+                border-radius: 0;
+                border: 1px solid #94822b;
+                position: relative;
+                margin: 35px 0 25px 0;
+                p {
+                    position: absolute;
+                    top: -10px;
+                    left: 7px;
+                    padding: 4px;
+                    line-height: 1;
+                    background: $roast;
+                    font-size: 12px;
+                    margin: 0;
+                }
+                .progress-bar {
+                    position: absolute;
+                    background: #352c07cc;
+                    height: 75%;
+                    left: 0;
+                    bottom: -1px;
+                    left: -1px;
+                    text-align: left;
+                    padding-top: 4px;
+                    padding-left: 10px;
+                    text-shadow: 1px 1px #000;
+                }
+            }
+        }
     }
 
-    img {
-        width: 100%;
-    }
-}
+    #actormovies {
+        .card {
+            @include noBorderLeft;
+            border: none;
 
-#actordetails {
+            h5.card-title {
+                margin: 0;
+            }
 
-    h2 {
-        font-size: 40px;
-    }
-
-    img {
-        width: 100%;
-    }
-}
-
-#moviesin {
-    li {
-        img {
-            width: 120px;
+            #moviesin {
+                li {
+                    h4 {
+                        font-weight: 700;
+                        line-height: 1.1;
+                        margin-bottom: 6px;
+                    }
+                    img {
+                        width: 120px;
+                    }
+                    p {
+                        margin-bottom: 6px;
+                        &.text-black {
+                            font-weight: 700;
+                            text-transform: capitalize;
+                        }
+                    }
+                }
+            }
         }
     }
 }

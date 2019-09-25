@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // TEST FUNC
         //this.onSearch('john');
+        document.getElementsByClassName("wrapper")[0].classList.add('homepage');
     }
 
 
@@ -97,6 +98,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.searchSub.unsubscribe();
+
+        document.getElementsByClassName("wrapper")[0].classList.remove('homepage');
     }
 }
 

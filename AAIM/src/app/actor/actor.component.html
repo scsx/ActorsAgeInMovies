@@ -1,30 +1,36 @@
-<div class="row no-gutters">
-    <div class="col col-md-6">
-        <div class="card" id="actordetails">
+<p class="back"><a class="" routerLink="/search">Back to search</a></p>
+<div class="row no-gutters actor">
+    <div class="col-12 col-md-6" id="actordetails">
+        <div class="card">
             <div class="card-body">
-                <h2>{{ actor?.name }}</h2>
-                <p class="text-muted">
-                    {{ actor?.birthday | date:'mediumDate' }}
-                    <span *ngIf="actor?.place_of_birth"> | </span>
+            <h2>{{ actor?.name }}</h2>
+                <p class="my-1" *ngIf="actor?.place_of_birth">
                     {{ actor?.place_of_birth }}
                 </p>
-                <p *ngIf="actor?.deathday" class="text-muted">{{ actor?.deathday | date:'mediumDate' }}</p>
+                <p>
+                    <span class="ball"></span>
+                    <span class="mr-3"> {{ actor?.birthday | date:'mediumDate' }}</span>
+                    <span class="ball black" *ngIf="actor?.deathday"></span>
+                    {{ actor?.deathday | date:'mediumDate' }}
+                </p>
+
                 <img *ngIf="actor?.picture; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" alt="{{ actor.name }}">
                 <ng-template #noPicture>
                     <img src="assets/images/user.jpg" class="align-self-start mr-3">
                 </ng-template>
-                <p class="mt-2">{{ actor?.biography }}</p>
 
-                <ul class="list-group list-group-horizontal">
-                    <li class="list-group-item">Popularity: {{ actor?.popularity }}</li>
-                    <li class="list-group-item">Gender: {{ actor?.gender }}</li>
-                    <li class="list-group-item">ID: {{ actor?.id }}</li>
-                </ul>
-                <p class="mt-4"><a class="btn btn-outline-dark" routerLink="/search">Back to search</a></p>
+                <div class="pop">
+                    <p>popularity</p>
+                    <div class="progress-bar" [style.width.%]="actor?.popularity * 10">{{ actor?.popularity }}</div>
+                </div>
+
+                <p class="mt-3 mb-2 bio">{{ actor?.biography }}</p>
+
+                <p class="mt-3 mb-2">ID: {{ actor?.id }}</p>
             </div>
         </div>
     </div>
-    <div class="col col-md-6">
+    <div class="col-12 col-md-6" id="actormovies">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Movies ({{ movieCount }})</h5>
@@ -40,14 +46,16 @@
                             <h4 class="mt-0">
                                 <a routerLink="/title/{{ mov.id }}">{{ mov.title }}</a>
                             </h4>
-                            <p class="text-secondary">{{ mov.character }}</p>
+                            <p class="text-black">{{ mov.character }}</p>
                             <p class="text-secondary" *ngIf="mov?.release_date">
                                 {{ mov?.release_date | date:'mediumDate' }}
-                                <span class="badge badge-pill badge-success ml-1">
-                                    {{ mov.ageDuringMovie }}
-                                    <small class="font-weight-light">yo</small>
-                                </span>
                             </p>
+                            <div class="age">
+                                <div class="years bg-success text-white">
+                                    {{ mov.ageDuringMovie }}
+                                </div>
+                                <p class="text-success">yo</p>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -55,6 +63,7 @@
         </div>
     </div>
 </div>
+<p class="back"><a class="" routerLink="/search">Back to search</a></p>
 <!--<pre><code style="color: #fff">
             {{ actor | json }}
         </code></pre>-->

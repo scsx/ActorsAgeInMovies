@@ -1,14 +1,10 @@
-<div class="row">
-    <div class="col">
-
-        <div class="input-group input-group-lg mt-4" id="multisearch">
-            <input
-                class="form-control primary"
-                id="mainSearch"
-                type="text"
-                [(ngModel)]="searchQuery"
-                (keyup)="onSearch(searchQuery)"
-                placeholder="Search for actor or title">
+<div class="searchpage">
+    <div class="inputs">
+        <div class="input-group input-group-lg" id="multisearch">
+            <input class="form-control primary" id="mainSearch" type="text"
+            [(ngModel)]="searchQuery"
+            (keyup)="onSearch(searchQuery)"
+            placeholder="Search for actor or title">
 
             <div class="input-group-append" *ngIf="totalResults">
                 <span class="input-group-text primary">
@@ -16,14 +12,10 @@
                 </span>
             </div>
         </div>
-
     </div>
-</div>
-<div class="results">
-    <div class="row">
-        <div class="col">
-            <div class="list-group">
-                <a
+    <div class="results">
+        <div class="list-group">
+            <a
                 href="javascript:void(0);"
                 class="list-group-item list-group-item-action"
                 *ngFor="let item of searchResults"
@@ -35,20 +27,16 @@
                             <!--{{ item | json }}-->
                         </div>
                     </div>
-                    
                 </a>
-            </div>
-            <ul class="list-group empty" *ngIf="searchResults && searchResults.length === 0">
-                <li class="list-group-item primary">
-                    <i>no results<span *ngIf="searchQuery && searchQuery.length < 3">. enter at least 3 characters</span></i>
-                </li>
-            </ul>
-
         </div>
+        <ul class="list-group empty" *ngIf="searchResults && searchResults.length === 0">
+            <li class="list-group-item primary">
+                <i>no results<span *ngIf="searchQuery && searchQuery.length < 3">. enter at least 3 characters</span></i>
+            </li>
+        </ul>
     </div>
 </div>
-
-<div class="btn-group mt-4">
-    <a class="btn btn-primary" routerLink="/actor">Actor</a>
-    <a class="btn btn-primary" routerLink="/title">Title</a>
-</div>
+<p class="text-center credits">
+    <a target="_blank" href="https://www.themoviedb.org/documentation/api">TheMovieDB</a> /
+    <a target="_blank" href="https://github.com/scsx/ActorsAgeInMovies">GitHub</a>
+</p>

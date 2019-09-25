@@ -17,7 +17,7 @@ export class TitleComponent implements OnInit, OnDestroy {
     titleId: number;
     titleDetails: IMovie;
     cast: IActorInMovie[] = [];
-    castSize: number;
+    castSize: number = 0;
 
     constructor(private movieService: ThemoviedbService, private route: ActivatedRoute) {
         this.route.params.subscribe( params => this.titleId = params.id );
@@ -79,7 +79,7 @@ export class TitleComponent implements OnInit, OnDestroy {
         )
         .subscribe(
             data => {
-                this.castSize = data.length;
+                //this.castSize = data.length;
                 data.forEach((element, index = 0) => {
 
                         this.getMovieCast = this.movieService.getActor(element.id).pipe(
@@ -90,7 +90,7 @@ export class TitleComponent implements OnInit, OnDestroy {
                         // todo: try to get around api rate limit (40, 10sec)
                         .subscribe(
                             actor => {
-
+                                this.castSize++;
                                 let movieChar = data[index].character;
                                 this.cast.push({
                                     id: actor.id,
