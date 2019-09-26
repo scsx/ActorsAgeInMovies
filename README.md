@@ -9,6 +9,7 @@ Angular/RxJs
 ## API & Tools
 
 https://developers.themoviedb.org
+
 https://www.npmjs.com/package/ngx-owl-carousel-o
 
 ## TODO
