@@ -1,4 +1,4 @@
-<p class="back"><a class="" routerLink="/search">Back to search</a></p>
+<p class="back"><a routerLink="/search">Back to search</a></p>
 <div class="row no-gutters actor">
     <div class="col-12 col-md-6" id="actordetails">
         <div class="card">
@@ -14,7 +14,11 @@
                     {{ actor?.deathday | date:'mediumDate' }}
                 </p>
 
-                <img *ngIf="actor?.picture; else noPicture" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" alt="{{ actor.name }}">
+                <div class="photo" *ngIf="actor?.picture; else noPicture">
+                    <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ actor.picture }}" alt="{{ actor.name }}">
+                    <a href="javascript:void(0)" (click)="goToPhotos()" class="btn seephotos">More photos</a>
+                </div>
+
                 <ng-template #noPicture>
                     <img src="assets/images/user.jpg" class="align-self-start mr-3">
                 </ng-template>
@@ -50,12 +54,19 @@
                             <p class="text-secondary" *ngIf="mov?.release_date">
                                 {{ mov?.release_date | date:'mediumDate' }}
                             </p>
-                            <div class="age">
-                                <div class="years bg-success text-white">
-                                    {{ mov.ageDuringMovie }}
-                                </div>
-                                <p class="text-success">yo</p>
+
+                            <div class="deceased" *ngIf="mov.ageDuringMovie == 999; else wasAlive">
+                                Posthumous production
                             </div>
+
+                            <ng-template #wasAlive>
+                                <div class="age">
+                                    <div class="years bg-success text-white">
+                                        {{ mov.ageDuringMovie }}
+                                    </div>
+                                    <p class="text-success">yo</p>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
                 </li>
@@ -63,7 +74,7 @@
         </div>
     </div>
 </div>
-<p class="back"><a class="" routerLink="/search">Back to search</a></p>
+<p class="back"><a routerLink="/search">Back to search</a></p>
 <!--<pre><code style="color: #fff">
-            {{ actor | json }}
-        </code></pre>-->
+    {{ actor | json }}
+</code></pre>-->

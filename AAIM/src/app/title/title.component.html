@@ -18,12 +18,26 @@
                             </h4>
                             <p class="text-black">{{ actor.character }}</p>
                             <p class="text-secondary">{{ actor.birthday | date:'mediumDate' }}</p>
-                            <div class="age">
+
+                            <div class="deceased" *ngIf="actor.ageDuringMovie == 999; else wasAlive">
+                                Posthumous production
+                            </div>
+
+                            <ng-template #wasAlive>
+                                <div class="age">
+                                    <div class="years bg-success text-white">
+                                        {{ actor.ageDuringMovie }}
+                                    </div>
+                                    <p class="text-success">yo</p>
+                                </div>
+                            </ng-template>
+
+                            <!-- <div class="age">
                                 <div class="years bg-success text-white">
                                     {{ actor.ageDuringMovie }}
                                 </div>
                                 <p class="text-success">yo</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </li>

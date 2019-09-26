@@ -27,14 +27,30 @@ export class ThemoviedbService {
         return this.http.get('https://api.themoviedb.org/3/person/' + id + '?api_key=' + this.apiKey);
     }
 
+    public getActorPhotos(id: number): Observable<any> {
+        return this.http.get('https://api.themoviedb.org/3/person/' + id + '/images?api_key=' + this.apiKey);
+    }
+
     public getActorsMovies(id: number): Observable<any> {
         return this.http.get('https://api.themoviedb.org/3/person/' + id + '/movie_credits?api_key=' + this.apiKey)
     }
 
-    public calculateYears(movieDate, actorDate) {
+    public calculateYears(movieDate, actorDate, deathDay) {
+
+        let isAlive = true;
+        if (deathDay instanceof Date && !isNaN(deathDay.getTime())) {
+            isAlive = false;
+        }
+
+        // movie date is known
         if (movieDate) {
-            const diffTime = Math.abs(movieDate.getTime() - actorDate.getTime());
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 365));
+            if  ( !isAlive &&  (deathDay.getTime() < movieDate.getTime())) {
+                // actor is dead during production (symbolically age = 999; ex: Jim Morrison)
+                return 999;
+            } else {
+                const diffTime = Math.abs(movieDate.getTime() - actorDate.getTime());
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 365));
+            }
         } else {
             return 0;
         }

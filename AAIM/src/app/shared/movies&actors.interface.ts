@@ -44,6 +44,7 @@ export interface IActorInMovie {
     name: string,
     character: string,
     birthday: Date,
+    deathday: Date,
     picture: string,
     ageDuringMovie: number
 }

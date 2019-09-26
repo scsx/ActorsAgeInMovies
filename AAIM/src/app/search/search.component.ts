@@ -23,9 +23,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // TEST FUNC
         //this.onSearch('john');
+        // change html class if it's search; redo
         document.getElementsByClassName("wrapper")[0].classList.add('homepage');
     }
-
 
     onSearch(query) {
         if (query.length <= 2) {
@@ -45,15 +45,12 @@ export class SearchComponent implements OnInit, OnDestroy {
                         return { result }
                     });
                 }),
-                // exclude non actors (technical staff)
+                // exclude tv shows and people non actors (technical staff)
                 map(results => {
-                        return results.filter(x => {
-                            return x.result.media_type !== 'person' || (
-                                x.result.media_type === 'person' &&
-                                x.result.known_for_department === 'Acting'
-                            )
-                        })
-                    }
+                    return results.filter(x => {
+                        return x.result.media_type !== 'person' && x.result.media_type !== 'tv' ||
+                        ( x.result.media_type === 'person' && x.result.known_for_department === 'Acting' )
+                    })}
                 )
             ).subscribe(
                 data => {

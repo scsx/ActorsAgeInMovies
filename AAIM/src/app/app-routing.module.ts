@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActorComponent } from './actor/actor.component';
+import { ActorPhotosComponent } from './actor/actorphotos/actorphotos.component';
 import { TitleComponent } from './title/title.component';
 import { SearchComponent } from './search/search.component';
 
@@ -13,6 +14,11 @@ import { SearchComponent } from './search/search.component';
     {
         path: 'actor/:id',
         component: ActorComponent,
+        data: { animationName: 'animateToDetail' }
+    },
+    {
+        path: 'actor/:id/photos',
+        component: ActorPhotosComponent,
         data: { animationName: 'animateToDetail' }
     },
     {

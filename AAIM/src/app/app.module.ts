@@ -4,9 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActorComponent } from './actor/actor.component';
+import { ActorPhotosComponent } from './actor/actorphotos/actorphotos.component';
 import { TitleComponent } from './title/title.component';
 import { SearchComponent } from './search/search.component';
 
@@ -14,6 +17,7 @@ import { SearchComponent } from './search/search.component';
     declarations: [
         AppComponent,
         ActorComponent,
+        ActorPhotosComponent,
         TitleComponent,
         SearchComponent
     ],
@@ -22,7 +26,9 @@ import { SearchComponent } from './search/search.component';
         HttpClientModule,
         FormsModule,
         BrowserAnimationsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        CarouselModule
     ],
     providers: [],
     bootstrap: [AppComponent]

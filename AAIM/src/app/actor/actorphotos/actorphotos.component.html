@@ -1,0 +1,17 @@
+<div class="actorphotos">
+    <p class="back"><a routerLink="/search">Back to search</a></p>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <h2 class="text-center"><a href="javascript:void(0)" (click)="goBack()">{{actorName}}</a> photos</h2>
+            <owl-carousel-o [options]="owlOptions">
+                <ng-container *ngFor="let slide of photos">
+                    <ng-template carouselSlide [id]="slide.id">
+                        <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ slide?.file_path }}">
+                        <p class="text-center votes">score: {{ slide?.vote_average }} / votes: {{ slide?.vote_count }}</p>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+    <p class="back"><a routerLink="/search">Back to search</a></p>
+</div>

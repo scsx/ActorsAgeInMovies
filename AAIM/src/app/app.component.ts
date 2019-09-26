@@ -12,9 +12,7 @@ import { allAnimations } from './shared/animations';
 })
 export class AppComponent implements OnInit {
 
-
     constructor() {}
-
     ngOnInit() {}
 
     prepareRoute(outlet: RouterOutlet) {

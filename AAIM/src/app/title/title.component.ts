@@ -12,8 +12,8 @@ import { ThemoviedbService } from '../shared/themoviedb.service';
 })
 export class TitleComponent implements OnInit, OnDestroy {
 
-    getMovie: Subscription;
-    getMovieCast: Subscription;
+    getMovie$: Subscription;
+    getMovieCast$: Subscription;
     titleId: number;
     titleDetails: IMovie;
     cast: IActorInMovie[] = [];
@@ -29,7 +29,7 @@ export class TitleComponent implements OnInit, OnDestroy {
     }
 
     getTitle(id) {
-        this.getMovie = this.movieService.searchTitle(id).subscribe(
+        this.getMovie$ = this.movieService.searchTitle(id).subscribe(
             data => {
                 this.titleDetails = {
                     title: data.title,
@@ -48,24 +48,7 @@ export class TitleComponent implements OnInit, OnDestroy {
     }
 
     getTitleCast(id) {
-        this.getMovie = this.movieService.searchTitleCast(id)
-        /*
-        .pipe(retryWhen(_ => {
-            console.log("trying");
-            return interval(2000)
-        }))
-        */
-        /*
-        .pipe(
-            retryWhen(errors =>
-                errors.pipe(
-                tap(val => console.log(errors)),
-                //restart in 6 seconds
-                delayWhen(val => timer(1000))
-                )
-            )
-        )
-        */
+        this.getMovie$ = this.movieService.searchTitleCast(id)
         .pipe(
             // rate limit
             tap(data => {
@@ -79,45 +62,46 @@ export class TitleComponent implements OnInit, OnDestroy {
         )
         .subscribe(
             data => {
-                //this.castSize = data.length;
                 data.forEach((element, index = 0) => {
 
-                        this.getMovieCast = this.movieService.getActor(element.id).pipe(
-                            filter(actor => {
-                                return actor.birthday !== null;
+                    this.getMovieCast$ = this.movieService.getActor(element.id).pipe(
+                        filter(actor => {
+                            return actor.birthday !== null;
+                        })
+                    )
+                    // todo: try to get around api rate limit (40, 10sec)
+                    .subscribe(
+                        actor => {
+
+                            this.castSize++;
+                            let movieChar = data[index].character;
+                            const isAlive = actor.deathday ? actor.deathday : "";
+
+                            this.cast.push({
+                                id: actor.id,
+                                name: actor.name,
+                                character: movieChar,
+                                birthday: new Date(actor.birthday),
+                                deathday: isAlive,
+                                picture: actor.profile_path,
+                                ageDuringMovie: this.movieService.calculateYears(
+                                    new Date(this.titleDetails.release_date),
+                                    new Date(actor.birthday),
+                                    new Date(isAlive)
+                                    )
                             })
-                        )
-                        // todo: try to get around api rate limit (40, 10sec)
-                        .subscribe(
-                            actor => {
-                                this.castSize++;
-                                let movieChar = data[index].character;
-                                this.cast.push({
-                                    id: actor.id,
-                                    name: actor.name,
-                                    character: movieChar,
-                                    birthday: new Date(actor.birthday),
-                                    picture: actor.profile_path,
-                                    ageDuringMovie: this.movieService.calculateYears(
-                                        new Date(actor.birthday),
-                                        new Date(this.titleDetails.release_date)
-                                        )
-                                })
 
-                                index++;
-                            },
-                            error => {
-                                console.log(error);
-                                if (error) {
-
-        return this.getMovieCast;
-
-          }
-                                console.log("Error getting ages");
+                            index++;
+                        },
+                        error => {
+                            console.log(error);
+                            if (error) {
+                                return this.getMovieCast$;
                             }
-                        )
-                    }
-                )
+                            console.log("Error getting ages");
+                        }
+                    )
+                })
             },
             error => {
                 console.log(error);
@@ -127,7 +111,7 @@ export class TitleComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.getMovie.unsubscribe();
+        this.getMovie$.unsubscribe();
         //this.getMovieCast.unsubscribe();
     }
 }

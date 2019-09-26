@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,700&display=swap');
 
 $roast: #f5cd00;
+$darkhoney: #715c07;
 
 @mixin noBorderLeft {
     border-top-left-radius: 0;
@@ -92,6 +93,15 @@ h1 {
     }
 }
 
+.deceased {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    padding: 4px 8px;
+    background: #8e8668;
+    color: #fff;
+}
+
 p.back {
     text-align: center;
     margin: 20px 0;
@@ -113,7 +123,6 @@ p.back {
         .input-group {
             &:focus {
                 outline: 0;
-
             }
 
             .form-control {
@@ -209,13 +218,13 @@ p.credits {
             @include noBorderLeft;
             border: none;
             background: $roast;
-            color: #715c07;
+            color: $darkhoney;
 
             h2 {
                 font-size: 55px;
                 font-weight: 700;
                 line-height: 1;
-                color: #715c07;
+                color: $darkhoney;
             }
             img {
                 width: 100%;
@@ -236,20 +245,35 @@ p.credits {
             @include noBorderRight;
             border: none;
             background: $roast;
-            color: #715c07;
+            color: $darkhoney;
 
             h2 {
                 font-size: 55px;
                 font-weight: 700;
                 line-height: 1;
-                color: #715c07;
+                color: $darkhoney;
             }
             p.bio {
                 line-height: 1.2;
             }
-            img {
-                width: 100%;
+            .photo {
+                position: relative;
+                img {
+                    width: 100%;
+                }
+                .seephotos {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    border-radius: 0;
+                    color: #000;
+                    background: $roast;
+                    &:hover {
+                        background: #fff;
+                    }
+                }
             }
+
             .pop {
                 height: 40px;
                 width: 120px;
@@ -312,5 +336,38 @@ p.credits {
                 }
             }
         }
+    }
+}
+
+// actor photos page
+.actorphotos {
+    h2 {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1;
+        color: $darkhoney;
+    }
+
+    p.votes {
+        margin: 10px 0 0 0;
+    }
+
+    .owl-carousel {
+       .owl-dots {
+           margin-top: 0;
+           .owl-dot {
+                span {
+                    width: 13px;
+                    height: 13px;
+                    margin: 0 2px;
+                    border: 2px solid #FFDD00;
+                    background: $darkhoney;
+                }
+                &.active span {
+                    background: #4a3e0c;
+                    border-color: #4a3e0c;
+                }
+            }
+       }
     }
 }
