@@ -7,7 +7,7 @@
                 <ng-container *ngFor="let slide of photos">
                     <ng-template carouselSlide [id]="slide.id">
                         <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ slide?.file_path }}">
-                        <p class="text-center votes">score: {{ slide?.vote_average }} / votes: {{ slide?.vote_count }}</p>
+                        <p class="text-center votes">score: {{ slide?.vote_average | number:'1.1-2' }} / votes: {{ slide?.vote_count }}</p>
                     </ng-template>
                 </ng-container>
             </owl-carousel-o>

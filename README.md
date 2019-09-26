@@ -26,4 +26,4 @@ ID: 152 (Jim Morrison)
 ID: 3663 (Jerry Lewis)
 
 Movie ID: 501350 (The Doors - Live at the Isle of Wight Festival 1970)
-In case of movie actors dead upon release show (Posthumous production), others show age at release, archive footage is impossible to assess
+In case of movie actors dead upon release show "Posthumous production", others show age at release, age during footage capture is impossible to assess

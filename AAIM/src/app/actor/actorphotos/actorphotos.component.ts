@@ -28,7 +28,6 @@ export class ActorPhotosComponent implements OnInit, OnDestroy {
         dots: true,
         navSpeed: 700,
         nav: false,
-        //navText: [ '<i class="fa-chevron-left"></i>', '<i class="fa-chevron-right></i>"' ],
         responsive: {
             0: {
                 items: 1
@@ -45,9 +44,7 @@ export class ActorPhotosComponent implements OnInit, OnDestroy {
     ngOnInit() {
         // get id
         this.actRoute.params.subscribe(
-            (params: Params) => {
-                this.actorId = +params['id'];
-            }
+            (params: Params) => { this.actorId = +params['id'] }
         );
         // get name
         this.getName(this.actorId);
@@ -63,7 +60,6 @@ export class ActorPhotosComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 data => {
-                    console.log(data);
                     this.photos = data;
                 },
                 error => {
