@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, timer, interval } from 'rxjs';
-import { map, filter, tap, retryWhen, delayWhen } from 'rxjs/operators';
+import { map, filter, tap, retryWhen, delayWhen, throttleTime } from 'rxjs/operators';
 import { IMovie, IActorInMovie } from '../shared/movies&actors.interface';
 import { ThemoviedbService } from '../shared/themoviedb.service';
 
@@ -65,6 +65,7 @@ export class TitleComponent implements OnInit, OnDestroy {
                 data.forEach((element, index = 0) => {
 
                     this.getMovieCast$ = this.movieService.getActor(element.id).pipe(
+                        throttleTime(500), // does nothing
                         filter(actor => {
                             return actor.birthday !== null;
                         })
@@ -74,7 +75,7 @@ export class TitleComponent implements OnInit, OnDestroy {
                         actor => {
 
                             this.castSize++;
-                            let movieChar = data[index].character;
+                            const movieChar = data[index].character;
                             const isAlive = actor.deathday ? actor.deathday : "";
 
                             this.cast.push({

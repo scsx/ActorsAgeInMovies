@@ -14,7 +14,7 @@ https://www.npmjs.com/package/ngx-owl-carousel-o
 
 ## TODO
 
-Workaround rate limit
+Workaround rate limit (test throttleTime https://rxjs-dev.firebaseapp.com/api/operators/throttleTime)
 
 ## Tests
 
