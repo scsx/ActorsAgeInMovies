@@ -17,13 +17,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     totalResults: string;
     searchSub: Subscription;
     imagePath = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2';
+    exampleBradPitt: string = window.location.origin + "/sandbox/aaim/actor/287";
 
     constructor(private movieService: ThemoviedbService) {}
 
     ngOnInit() {
         // TEST FUNC
         //this.onSearch('john');
-        // change html class if it's search; redo
+        // change html class if it's search; improve later
         document.getElementsByClassName("wrapper")[0].classList.add('homepage');
     }
 
@@ -38,7 +39,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 // get total results & discard info other than the results array
                 map(data => {
                     this.totalResults = data.total_results;
-                    if ( +this.totalResults === 10000 ) {
+                    if (+this.totalResults === 10000) {
                         this.totalResults = '+10.000';
                     }
                     return data.results.map(result => {
@@ -49,9 +50,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 map(results => {
                     return results.filter(x => {
                         return x.result.media_type !== 'person' && x.result.media_type !== 'tv' ||
-                        ( x.result.media_type === 'person' && x.result.known_for_department === 'Acting' )
-                    })}
-                )
+                            (x.result.media_type === 'person' && x.result.known_for_department === 'Acting')
+                    })
+                })
             ).subscribe(
                 data => {
                     data.forEach(el => {
@@ -71,16 +72,16 @@ export class SearchComponent implements OnInit, OnDestroy {
                         }
 
                         let newRes = new SearchResponse(
-                           el.result.id,
-                           isPerson,
-                           name,
-                           posterOrPhoto
+                            el.result.id,
+                            isPerson,
+                            name,
+                            posterOrPhoto
                         );
                         this.searchResults.push(newRes);
                     });
                 },
                 theError => {
-                    console.log("custom error: " +  theError);
+                    console.log("custom error: " + theError);
                 }
             );
     }
@@ -99,4 +100,3 @@ export class SearchComponent implements OnInit, OnDestroy {
         document.getElementsByClassName("wrapper")[0].classList.remove('homepage');
     }
 }
-

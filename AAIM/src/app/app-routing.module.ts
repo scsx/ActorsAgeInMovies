@@ -5,8 +5,7 @@ import { ActorPhotosComponent } from './actor/actorphotos/actorphotos.component'
 import { TitleComponent } from './title/title.component';
 import { SearchComponent } from './search/search.component';
 
- const routes: Routes = [
-    {
+const routes: Routes = [{
         path: 'search',
         component: SearchComponent,
         data: { animationName: 'animateToHome' }
@@ -27,15 +26,15 @@ import { SearchComponent } from './search/search.component';
         data: { animationName: 'animateToDetail' }
     },
     { path: '', redirectTo: 'search', pathMatch: 'full' }
- ];
+];
 
- @NgModule({
-     imports: [
-         RouterModule.forRoot(routes)
-     ],
-     exports: [
-         RouterModule
-     ],
-     declarations: []
- })
- export class AppRoutingModule {}
+@NgModule({
+    imports: [
+        RouterModule.forRoot(routes)
+    ],
+    exports: [
+        RouterModule
+    ],
+    declarations: []
+})
+export class AppRoutingModule {}
