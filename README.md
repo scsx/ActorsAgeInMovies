@@ -2,7 +2,7 @@
 
 Wanna know how old some actor was in a movie? This is the place.
 
-See how old/young he/she looks, how poor was the character makeup or use it if you just have some weird age fetish.
+See how old/young he/she looks, how poor was the character makeup or use it if you just have some weird age obsession.
 
 Angular/RxJs
 
