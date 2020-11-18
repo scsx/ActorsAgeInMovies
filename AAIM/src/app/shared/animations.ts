@@ -1,4 +1,4 @@
-//https://angular.io/guide/route-animations#styling-the-host-and-child-components
+// https://angular.io/guide/route-animations#styling-the-host-and-child-components
 
 import {
 trigger,

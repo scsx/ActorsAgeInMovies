@@ -21,7 +21,7 @@ Workaround rate limit (test throttleTime https://rxjs-dev.firebaseapp.com/api/op
 Movie with no release date (Embattled):
 https://api.themoviedb.org/3/movie/592643
 
-Actor deceased at film production (not posthumous release, archive footage used instead, meaning that age during movie may be unknwon, multivalue or impossible to assess):
+Actor deceased at film production (not posthumous release, archive footage used instead, meaning that age during movie may be unknwon or multivalue):
 ID: 152 (Jim Morrison)
 ID: 3663 (Jerry Lewis)
 
